@@ -37,11 +37,9 @@ body{margin:0;min-height:100vh;background:#10161F;display:flex;flex-direction:co
 </div>
 <script>
 document.getElementById("resetbtn").onclick = function(){
-  try{
-    var f=document.getElementById("app");
-    f.contentWindow.localStorage.removeItem("ais-fit");
-    f.contentWindow.location.reload();
-  }catch(e){ document.getElementById("app").src="index.html?fresh="+Date.now(); }
+  var f=document.getElementById("app");
+  try{ f.contentWindow.localStorage.removeItem("ais-fit"); }catch(e){}
+  f.src="index.html?tester=1&fresh="+Date.now();
 };
 </script>
 </body>
