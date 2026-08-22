@@ -299,152 +299,152 @@ const SECTORS = {
 
 const QS = [
  /* ---- core head ---- */
- {id:"q1", sec:["About you","عنكم"], text:["What kind of organization are you?","ما نوع جهتكم؟"], type:"single", opts:[
+ {id:"q1", sec:["About you","نبذة عنكم"], text:["What kind of organization are you?","ما نوع جهتكم؟"], type:"single", opts:[
    {v:"gov", t:["Government or public sector","جهة حكومية أو قطاع عام"]},
-   {v:"ent", t:["Private enterprise","شركة قطاع خاص"], s:["200+ people","أكثر من 200 موظف"]},
+   {v:"ent", t:["Private enterprise","مؤسسة قطاع خاص"], s:["200+ people","أكثر من 200 موظف"]},
    {v:"sme", t:["Small or mid-size business","منشأة صغيرة أو متوسطة"]},
    {v:"startup", t:["Startup","شركة ناشئة"]},
    {v:"personal", t:["Exploring personally","استكشاف شخصي"]}]},
- {id:"q2", sec:["About you","عنكم"], text:["Where would this run, and in which sector?","أين سيُطبَّق هذا، وفي أي قطاع؟"], type:"combo2",
-   a:{label:["Country","الدولة"], kind:"datalist", list:COUNTRIES, ph:["Start typing…","ابدؤوا بالكتابة…"]},
+ {id:"q2", sec:["About you","نبذة عنكم"], text:["Where would this run, and in which sector?","أين سيُطبَّق هذا المشروع، وفي أي قطاع؟"], type:"combo2",
+   a:{label:["Country","الدولة"], kind:"datalist", list:COUNTRIES, ph:["Start typing…","يرجى بدء الكتابة…"]},
    b:{label:["Sector","القطاع"], kind:"select", list:SECTORS}},
- {id:"q3", sec:["The situation","الوضع"], text:["What happened that makes this worth examining now?","ما الذي حدث فجعل هذا الأمر يستحق النظر الآن؟"], hint:["Choose the closest answer.","اختاروا الأقرب."], type:"single", opts:[
-   {v:"deadline", t:["An externally fixed deadline","موعد نهائي خارجي ثابت"], s:["a regulation, contract, audit, or launch","لائحة أو عقد أو تدقيق أو إطلاق"]},
-   {v:"threshold", t:["A recurring cost or service problem crossed a line","مشكلة متكررة في التكلفة أو الخدمة تجاوزت الحد"]},
-   {v:"exec", t:["An executive asked for a decision or a PoC","طلب أحد التنفيذيين قرارًا أو نموذجًا تجريبيًا"]},
-   {v:"program", t:["A funded program is selecting a use case or supplier","برنامج مموَّل يختار حالة استخدام أو موردًا"]},
-   {v:"incident", t:["An active customer or operational incident","حادثة قائمة مع عميل أو في التشغيل"]},
-   {v:"explore", t:["Exploration for now","استكشاف في الوقت الحالي"], s:["no event or deadline yet","لا حدث ولا موعد بعد"]}]},
- {id:"q3b", showIf:a=>a.q3==="deadline"||a.q3==="incident", sec:["The situation","الوضع"],
-   text:["What is the date, and what changes if it slips?","ما التاريخ، وما الذي يتغير إذا فات؟"],
-   hint:["e.g. new reporting rule effective 1 Nov; fines apply per late filing.","مثال: لائحة تقارير جديدة تسري في 1 نوفمبر، وغرامة على كل تأخير."],
-   type:"shorttext", ph:["Date, and the consequence","التاريخ، والعاقبة"], skipLabel:["There is no firm date","لا يوجد تاريخ مؤكد"]},
- {id:"q4", sec:["The situation","الوضع"], text:["The most recent time this happened: what was someone trying to do, what failed, and what happened next?","آخر مرة حدث فيها ذلك: ماذا كان يحاول أحدهم أن يفعل، وما الذي تعطّل، وماذا حدث بعدها؟"],
-   hint:["A real incident beats a polished summary. Two to four sentences.","حادثة حقيقية أفضل من ملخص منمّق. جملتان إلى أربع جمل."],
-   type:"longtext", min:MIN_EXAMPLE_CHARS, tph:["What happened, who was involved, what it cost…","ما الذي حدث، ومن شارك، وما التكلفة…"],
+ {id:"q3", sec:["The situation","الحالة الراهنة"], text:["What happened that makes this worth examining now?","ما الدوافع التي تجعل هذا الأمر يستحق الدراسة الآن؟"], hint:["Choose the closest answer.","يرجى اختيار الإجابة الأقرب."], type:"single", opts:[
+   {v:"deadline", t:["An externally fixed deadline","موعد نهائي إلزامي من جهة خارجية"], s:["a regulation, contract, audit, or launch","لائحة تنظيمية، أو عقد، أو تدقيق، أو إطلاق"]},
+   {v:"threshold", t:["A recurring cost or service problem crossed a line","تفاقم مشكلة متكررة في التكلفة أو الخدمة"]},
+   {v:"exec", t:["An executive asked for a decision or a PoC","طلب من الإدارة التنفيذية لاتخاذ قرار أو إعداد نموذج إثبات الجدوى"]},
+   {v:"program", t:["A funded program is selecting a use case or supplier","برنامج مموَّل في مرحلة اختيار حالة الاستخدام أو المورِّد"]},
+   {v:"incident", t:["An active customer or operational incident","حادثة تشغيلية أو مشكلة قائمة مع العملاء"]},
+   {v:"explore", t:["Exploration for now","مجرد استكشاف في الوقت الحالي"], s:["no event or deadline yet","لا يوجد حدث أو موعد نهائي بعد"]}]},
+ {id:"q3b", showIf:a=>a.q3==="deadline"||a.q3==="incident", sec:["The situation","الحالة الراهنة"],
+   text:["What is the date, and what changes if it slips?","ما هو التاريخ المستهدف؟ وما العواقب في حال تجاوزه؟"],
+   hint:["e.g. new reporting rule effective 1 Nov; fines apply per late filing.","مثال: لائحة تقارير جديدة تسري في 1 نوفمبر؛ وتُطبَّق غرامات على التأخير."],
+   type:"shorttext", ph:["Date, and the consequence","التاريخ، والعواقب المترتبة"], skipLabel:["There is no firm date","لا يوجد تاريخ مؤكد"]},
+ {id:"q4", sec:["The situation","الحالة الراهنة"], text:["The most recent time this happened: what was someone trying to do, what failed, and what happened next?","في آخر مرة وقعت فيها المشكلة: ما الإجراء المستهدف؟ وما الذي تعطل؟ وماذا حدث بعد ذلك؟"],
+   hint:["A real incident beats a polished summary. Two to four sentences.","يرجى ذكر حادثة حقيقية (من جملتين إلى أربع جمل) بدلًا من الملخصات العامة."],
+   type:"longtext", min:MIN_EXAMPLE_CHARS, tph:["What happened, who was involved, what it cost…","تفاصيل الحدث، والأطراف المعنية، والتكلفة…"],
    escapeLabel:["We don't have a specific example yet","لا نملك مثالًا محددًا بعد"],
    onEscape:a=>{a.q4=""; a.q4none=true;}, onAnswer:a=>{delete a.q4none;}},
- {id:"q5", branch:"problem", sec:["The situation","الوضع"], text:["What is the evidence for the current impact?","ما الدليل على الأثر الحالي؟"], type:"single", opts:[
-   {v:"finance", t:["Measured in a finance or operational report","مقاس في تقرير مالي أو تشغيلي"]},
-   {v:"sample", t:["Measured from a sample or time study","مقاس من عيّنة أو دراسة زمنية"]},
-   {v:"calculated", t:["Calculated","محسوب"], s:["from known volume × time or cost","من حجم معروف × وقت أو تكلفة"]},
-   {v:"estimate", t:["An informed estimate","تقدير مبني على خبرة"], s:["some inputs are missing","بعض المدخلات ناقصة"]},
-   {v:"none", t:["Not yet estimated","لم يُقدَّر بعد"]},
-   {v:"nonfinancial", t:["The impact is mainly risk, quality, or service","الأثر أساسًا في المخاطر أو الجودة أو الخدمة"]}]},
- {id:"q5b", branch:"problem", showIf:a=>["finance","sample","calculated"].indexOf(a.q5)>=0, sec:["The situation","الوضع"],
-   text:["The figure, the period, and where it comes from.","الرقم، والفترة، ومصدره."],
-   hint:["e.g. 1,200 staff-hours per month, from the queue report.","مثال: 1,200 ساعة عمل شهريًا، من تقرير قائمة الانتظار."],
-   type:"shorttext", ph:["Figure, period, source","الرقم، الفترة، المصدر"], skipLabel:["I'd rather share this in the meeting","أفضّل مشاركته في الاجتماع"]},
- {id:"q6", branch:"problem", sec:["The situation","الوضع"], text:["At the end of a 90-day proof of concept, which decision should the evidence support?","في نهاية نموذج تجريبي مدته 90 يومًا، أي قرار ينبغي أن تدعمه النتائج؟"], type:"single", opts:[
-   {v:"deploy", t:["Whether to fund and deploy a production version","هل نموّل النسخة الإنتاجية وننشرها"]},
-   {v:"feasible", t:["Whether this approach is technically feasible","هل هذا النهج ممكن تقنيًا"]},
-   {v:"case", t:["Whether the business case is strong enough","هل جدوى الأعمال قوية بما يكفي"]},
-   {v:"choose", t:["Which of several approaches to select","أي نهج من عدة خيارات نختار"]},
-   {v:"stop", t:["Whether to stop or proceed","هل نتوقف أم نمضي"]},
-   {v:"unsure", t:["Not sure yet","لسنا متأكدين بعد"], x:true}]},
+ {id:"q5", branch:"problem", sec:["The situation","الحالة الراهنة"], text:["What is the evidence for the current impact?","ما الدليل على الأثر الحالي للمشكلة؟"], type:"single", opts:[
+   {v:"finance", t:["Measured in a finance or operational report","مُقاس عبر تقرير مالي أو تشغيلي"]},
+   {v:"sample", t:["Measured from a sample or time study","مُقاس عبر عيّنة أو دراسة زمنية"]},
+   {v:"calculated", t:["Calculated","محسوب رقميًا"], s:["from known volume × time or cost","بناءً على الحجم المعروف × الوقت أو التكلفة"]},
+   {v:"estimate", t:["An informed estimate","تقدير مبني على الخبرة"], s:["some inputs are missing","بعض المدخلات غير متوفرة"]},
+   {v:"none", t:["Not yet estimated","لم يُقدَّر الأثر بعد"]},
+   {v:"nonfinancial", t:["The impact is mainly risk, quality, or service","الأثر يتركز أساسًا في المخاطر، أو الجودة، أو الخدمة"]}]},
+ {id:"q5b", branch:"problem", showIf:a=>["finance","sample","calculated"].indexOf(a.q5)>=0, sec:["The situation","الحالة الراهنة"],
+   text:["The figure, the period, and where it comes from.","يرجى تحديد الرقم، والفترة الزمنية، والمصدر."],
+   hint:["e.g. 1,200 staff-hours per month, from the queue report.","مثال: 1,200 ساعة عمل شهريًا، بناءً على تقرير قائمة الانتظار."],
+   type:"shorttext", ph:["Figure, period, source","الرقم، الفترة الزمنية، المصدر"], skipLabel:["I'd rather share this in the meeting","أفضّل مشاركة ذلك خلال الاجتماع"]},
+ {id:"q6", branch:"problem", sec:["The situation","الحالة الراهنة"], text:["At the end of a 90-day proof of concept, which decision should the evidence support?","في نهاية نموذج إثبات الجدوى (لمدة 90 يومًا)، ما القرار الذي ينبغي أن تدعمه النتائج؟"], type:"single", opts:[
+   {v:"deploy", t:["Whether to fund and deploy a production version","تمويل ونشر النسخة الإنتاجية"]},
+   {v:"feasible", t:["Whether this approach is technically feasible","تحديد الجدوى التقنية لهذا النهج"]},
+   {v:"case", t:["Whether the business case is strong enough","تقييم مدى قوة جدوى الأعمال"]},
+   {v:"choose", t:["Which of several approaches to select","المفاضلة واختيار النهج الأنسب من بين عدة خيارات"]},
+   {v:"stop", t:["Whether to stop or proceed","الاستمرار في المشروع أو إيقافه"]},
+   {v:"unsure", t:["Not sure yet","غير متأكدين بعد"], x:true}]},
  /* ---- problem branch ---- */
- {id:"p1", branch:"problem", sec:["The ground truth","الواقع على الأرض"], text:["Whose work changes first if this succeeds, and how much flows through that workflow monthly?","عمل مَن سيتغير أولًا إذا نجح هذا، وكم يمر عبر هذا الإجراء شهريًا؟"], type:"combo2",
-   a:{label:["Whose work","العمل المعني"], kind:"select", list:{en:["Front-line operations","Analysts / reviewers","Managers","Executive decisions","Customers / the public","A technical team","Mixed"], ar:["عمليات الخط الأمامي","محللون ومراجعون","مدراء","قرارات تنفيذية","العملاء أو الجمهور","فريق تقني","متنوع"]}},
-   b:{label:["Cases / documents / requests per month","حالات / مستندات / طلبات شهريًا"], kind:"select", list:{en:["Under 100","100 – 1,000","1,000 – 10,000","Over 10,000","Not measured"], ar:["أقل من 100","100 – 1,000","1,000 – 10,000","أكثر من 10,000","غير مقاس"]}}},
- {id:"p2", branch:"problem", sec:["The ground truth","الواقع على الأرض"], text:["What is the furthest this problem has already progressed?","ما أبعد ما وصلت إليه معالجة هذه المشكلة؟"], type:"single", opts:[
-   {v:"discussed", t:["Discussed, but not investigated","نوقشت، دون دراسة"]},
-   {v:"analysis", t:["A process review or data analysis was done","أُجريت مراجعة إجراء أو تحليل بيانات"]},
-   {v:"prototype", t:["An internal prototype","نموذج داخلي أولي"]},
-   {v:"vendor", t:["An external tool or vendor trial","تجربة أداة أو مورد خارجي"]},
-   {v:"poc", t:["A formal proof of concept","نموذج تجريبي رسمي"]},
-   {v:"production", t:["A production solution exists","حل إنتاجي قائم"], s:["but it is not enough","لكنه غير كافٍ"]},
-   {v:"nothing", t:["Nothing attempted yet","لم يُجرَّب شيء بعد"]}]},
- {id:"p2b", branch:"problem", showIf:a=>a.p2&&a.p2!=="nothing"&&a.p2!=="discussed", sec:["The ground truth","الواقع على الأرض"],
-   text:["What stopped it, or what remained unsolved?","ما الذي أوقفه، أو ما الذي بقي دون حل؟"], type:"single", opts:[
-   {v:"data", t:["The data wasn't usable","البيانات لم تكن صالحة للاستخدام"]},
-   {v:"backing", t:["No leadership backing","غياب دعم القيادة"]},
-   {v:"cost", t:["Too expensive","مكلف جدًا"]},
-   {v:"fit", t:["Didn't fit how we work","لا يناسب طريقة عملنا"]},
-   {v:"partial", t:["It runs, but doesn't solve enough","يعمل، لكنه لا يحل ما يكفي"]}]},
- {id:"p3", branch:"problem", sec:["The ground truth","الواقع على الأرض"], text:["Name the one measure that should decide the PoC.","سمّوا المقياس الوحيد الذي يجب أن يحسم النموذج التجريبي."],
-   hint:["The number, where it is today, where it must reach, and which report or person can verify it.","الرقم، وأين هو اليوم، وأين يجب أن يصل، ومن أو ما الذي يتحقق منه."],
-   type:"fields", escapeLabel:["The baseline isn't measured yet","خط الأساس غير مقاس بعد"], onEscape:a=>{a.p3={};a.p3none=true;}, onAnswer:a=>{delete a.p3none;},
-   fields:[{key:"metric",label:["The measure","المقياس"],ph:["e.g. clearance turnaround","مثال: زمن التخليص"]},
-           {key:"move",label:["From where to where","من أين إلى أين"],ph:["e.g. from 4 days to same-day","مثال: من 4 أيام إلى اليوم نفسه"]},
-           {key:"source",label:["Verified by","يُتحقق منه عبر"],ph:["e.g. the operations queue report","مثال: تقرير قائمة العمليات"]}]},
- {id:"p4", branch:"problem", sec:["The ground truth","الواقع على الأرض"], text:["Which statement best describes the data needed to run and judge the PoC?","أي عبارة تصف البيانات اللازمة لتشغيل النموذج التجريبي والحكم عليه؟"], type:"single", opts:[
-   {v:"ready", t:["In a named system; owner and a representative sample available within two weeks","في نظام معروف؛ المالك وعيّنة ممثلة متاحان خلال أسبوعين"]},
-   {v:"unapproved", t:["It exists and the owner is known, but access isn't approved","موجودة والمالك معروف، لكن الوصول غير معتمد"]},
-   {v:"scattered", t:["Spread across files, email, or several systems","موزعة بين ملفات وبريد وأنظمة عدة"]},
-   {v:"nolabels", t:["Inputs exist, but accepted outcomes aren't recorded","المدخلات موجودة، لكن النتائج المعتمدة غير مسجلة"]},
-   {v:"create", t:["It would have to be newly collected or created","يجب جمعها أو إنشاؤها من جديد"]},
-   {v:"captive", t:["It cannot leave our environment","لا يمكنها مغادرة بيئتنا"]},
-   {v:"unknown", t:["We don't know yet","لا نعلم بعد"]}]},
- {id:"p5", branch:"problem", sec:["The ground truth","الواقع على الأرض"], text:["Which of these are hard requirements?","أي من هذه متطلبات صارمة؟"], hint:["Select all that apply.","اختاروا كل ما ينطبق."], type:"multi", opts:[
-   {v:"residency", t:["Data stays in a specific country or on-premise","تبقى البيانات داخل بلد محدد أو داخل منشآتنا"]},
-   {v:"notraining", t:["Our data must not train a provider's models","يجب ألا تُستخدم بياناتنا لتدريب نماذج المزوِّد"]},
-   {v:"human", t:["A person must approve consequential outputs","يجب أن يعتمد إنسانٌ المخرجات المؤثرة"]},
-   {v:"audit", t:["Outputs need sources or an audit trail","تحتاج المخرجات إلى مصادر أو سجل تدقيق"]},
-   {v:"integration", t:["Must plug into a live system","يجب الربط بنظام تشغيلي قائم"]},
-   {v:"security", t:["Security or legal approval before any data access","موافقة أمنية أو قانونية قبل أي وصول إلى البيانات"]},
-   {v:"language", t:["Arabic or another language is required","مطلوب العمل بالعربية أو لغة أخرى"]},
-   {v:"none", t:["None of these","لا شيء من هذه"], x:true},
-   {v:"unsure", t:["Not sure","لسنا متأكدين"], x:true}]},
+ {id:"p1", branch:"problem", sec:["The ground truth","المعطيات الواقعية"], text:["Whose work changes first if this succeeds, and how much flows through that workflow monthly?","مَن الفئة التي سيتغير عملها أولًا في حال النجاح؟ وما حجم العمل المار عبر سير العمل هذا شهريًا؟"], type:"combo2",
+   a:{label:["Whose work","الفئة المعنية"], kind:"select", list:{en:["Front-line operations","Analysts / reviewers","Managers","Executive decisions","Customers / the public","A technical team","Mixed"], ar:["عمليات الخط الأمامي","محللون ومراجعون","مدراء","قرارات تنفيذية","العملاء أو الجمهور","فريق تقني","متنوع"]}},
+   b:{label:["Cases / documents / requests per month","عدد الحالات / المستندات / الطلبات شهريًا"], kind:"select", list:{en:["Under 100","100 – 1,000","1,000 – 10,000","Over 10,000","Not measured"], ar:["أقل من 100","100 – 1,000","1,000 – 10,000","أكثر من 10,000","غير مقاس"]}}},
+ {id:"p2", branch:"problem", sec:["The ground truth","المعطيات الواقعية"], text:["What is the furthest this problem has already progressed?","ما أقصى مرحلة وصلتم إليها في معالجة هذه المشكلة؟"], type:"single", opts:[
+   {v:"discussed", t:["Discussed, but not investigated","نوقشت، دون دراسة متعمقة"]},
+   {v:"analysis", t:["A process review or data analysis was done","إجراء مراجعة للعمليات أو تحليل للبيانات"]},
+   {v:"prototype", t:["An internal prototype","تطوير نموذج أولي داخلي"]},
+   {v:"vendor", t:["An external tool or vendor trial","تجربة أداة خارجية أو مورِّد"]},
+   {v:"poc", t:["A formal proof of concept","إعداد نموذج إثبات جدوى رسمي"]},
+   {v:"production", t:["A production solution exists","يوجد حل إنتاجي قائم"], s:["but it is not enough","لكنه غير كافٍ"]},
+   {v:"nothing", t:["Nothing attempted yet","لم تُتخذ أي خطوات بعد"]}]},
+ {id:"p2b", branch:"problem", showIf:a=>a.p2&&a.p2!=="nothing"&&a.p2!=="discussed", sec:["The ground truth","المعطيات الواقعية"],
+   text:["What stopped it, or what remained unsolved?","ما العوائق التي أوقفت التقدم؟ أو ما الجوانب التي بقيت دون حل؟"], type:"single", opts:[
+   {v:"data", t:["The data wasn't usable","البيانات غير صالحة للاستخدام"]},
+   {v:"backing", t:["No leadership backing","غياب دعم الإدارة العليا"]},
+   {v:"cost", t:["Too expensive","التكلفة العالية"]},
+   {v:"fit", t:["Didn't fit how we work","عدم المواءمة مع أسلوب عملنا"]},
+   {v:"partial", t:["It runs, but doesn't solve enough","الحل يعمل، لكنه لا يعالج المشكلة بشكل كافٍ"]}]},
+ {id:"p3", branch:"problem", sec:["The ground truth","المعطيات الواقعية"], text:["Name the one measure that should decide the PoC.","يرجى تحديد المقياس الأساسي الذي سيُحسم بناءً عليه نجاح نموذج إثبات الجدوى."],
+   hint:["The number, where it is today, where it must reach, and which report or person can verify it.","القيمة الحالية للمقياس، والقيمة المستهدفة، والجهة أو التقرير المرجعي للتحقق."],
+   type:"fields", escapeLabel:["The baseline isn't measured yet","لم يُقَس خط الأساس بعد"], onEscape:a=>{a.p3={};a.p3none=true;}, onAnswer:a=>{delete a.p3none;},
+   fields:[{key:"metric",label:["The measure","المقياس"],ph:["e.g. clearance turnaround","مثال: الوقت المستغرق للتخليص"]},
+           {key:"move",label:["From where to where","من (القيمة الحالية) إلى (القيمة المستهدفة)"],ph:["e.g. from 4 days to same-day","مثال: من 4 أيام إلى الإنجاز في نفس اليوم"]},
+           {key:"source",label:["Verified by","جهة التحقق"],ph:["e.g. the operations queue report","مثال: تقرير قائمة العمليات التشغيلية"]}]},
+ {id:"p4", branch:"problem", sec:["The ground truth","المعطيات الواقعية"], text:["Which statement best describes the data needed to run and judge the PoC?","أي العبارات التالية تصف بدقة جاهزية البيانات اللازمة لتشغيل وتقييم النموذج التجريبي؟"], type:"single", opts:[
+   {v:"ready", t:["In a named system; owner and a representative sample available within two weeks","محفوظة في نظام محدد؛ ومالك البيانات وعيّنة ممثلة متاحان خلال أسبوعين"]},
+   {v:"unapproved", t:["It exists and the owner is known, but access isn't approved","موجودة ومالكها معروف، لكن صلاحية الوصول غير معتمدة"]},
+   {v:"scattered", t:["Spread across files, email, or several systems","موزعة عبر ملفات، أو رسائل بريد إلكتروني، أو أنظمة متعددة"]},
+   {v:"nolabels", t:["Inputs exist, but accepted outcomes aren't recorded","المدخلات متوفرة، لكن النتائج المعتمدة غير مسجلة"]},
+   {v:"create", t:["It would have to be newly collected or created","تتطلب جمعًا أو إنشاءً من الصفر"]},
+   {v:"captive", t:["It cannot leave our environment","لا يمكنها مغادرة بيئتنا التقنية"]},
+   {v:"unknown", t:["We don't know yet","غير متأكدين بعد"]}]},
+ {id:"p5", branch:"problem", sec:["The ground truth","المعطيات الواقعية"], text:["Which of these are hard requirements?","أيٌّ من المتطلبات التالية يُعد إلزاميًا؟"], hint:["Select all that apply.","يرجى اختيار كل ما ينطبق."], type:"multi", opts:[
+   {v:"residency", t:["Data stays in a specific country or on-premise","بقاء البيانات داخل دولة محددة أو في خوادم الجهة (On-premise)"]},
+   {v:"notraining", t:["Our data must not train a provider's models","عدم استخدام بياناتنا لتدريب نماذج الذكاء الاصطناعي الخاصة بالمزوِّد"]},
+   {v:"human", t:["A person must approve consequential outputs","ضرورة الاعتماد البشري للمخرجات المؤثرة"]},
+   {v:"audit", t:["Outputs need sources or an audit trail","توثيق المخرجات بالمصادر أو بسجل تدقيق"]},
+   {v:"integration", t:["Must plug into a live system","الربط المباشر بنظام تشغيلي قائم"]},
+   {v:"security", t:["Security or legal approval before any data access","الحصول على موافقة أمنية أو قانونية قبل أي وصول للبيانات"]},
+   {v:"language", t:["Arabic or another language is required","دعم اللغة العربية أو لغة أخرى متطلب أساسي"]},
+   {v:"none", t:["None of these","لا ينطبق أي مما سبق"], x:true},
+   {v:"unsure", t:["Not sure","غير متأكدين"], x:true}]},
  /* ---- explorer branch ---- */
- {id:"e1", branch:"explorer", sec:["Where to look","أين ننظر"], text:["Which workflow is most worth investigating first?","أي إجراء عمل يستحق البحث أولًا؟"], type:"single", opts:[
-   {v:"requests", t:["Customer or citizen requests","طلبات العملاء أو الجمهور"]},
-   {v:"documents", t:["Document or case handling","معالجة المستندات والمعاملات"]},
-   {v:"knowledge", t:["Knowledge search and answers","البحث المعرفي والإجابات"]},
-   {v:"forecasting", t:["Forecasting or prioritization","التنبؤ وترتيب الأولويات"]},
-   {v:"quality", t:["Quality or compliance review","مراجعة الجودة والالتزام"]},
+ {id:"e1", branch:"explorer", sec:["Where to look","مجالات التركيز"], text:["Which workflow is most worth investigating first?","أي مسارات سير العمل تستحق الدراسة أولًا؟"], type:"single", opts:[
+   {v:"requests", t:["Customer or citizen requests","طلبات العملاء أو المستفيدين"]},
+   {v:"documents", t:["Document or case handling","معالجة المستندات أو المعاملات"]},
+   {v:"knowledge", t:["Knowledge search and answers","البحث في قواعد المعرفة واستخراج الإجابات"]},
+   {v:"forecasting", t:["Forecasting or prioritization","التنبؤ أو ترتيب الأولويات"]},
+   {v:"quality", t:["Quality or compliance review","مراجعة الجودة أو الامتثال"]},
    {v:"productivity", t:["Employee productivity","إنتاجية الموظفين"]},
-   {v:"unsure", t:["Not sure yet","لسنا متأكدين بعد"]}]},
- {id:"e2", branch:"explorer", sec:["Where to look","أين ننظر"], text:["What should 60 days of exploring let your organization decide?","ما الذي ينبغي أن تُمكِّنكم 60 يومًا من الاستكشاف من تقريره؟"], type:"single", opts:[
-   {v:"material", t:["Whether the problem is material enough to address","هل المشكلة جوهرية بما يستحق المعالجة"]},
-   {v:"prioritize", t:["Which use case should come first","أي حالة استخدام تأتي أولًا"]},
-   {v:"data", t:["Whether usable data exists","هل توجد بيانات صالحة للاستخدام"]},
-   {v:"fund", t:["Whether to fund a proof of concept","هل نموّل نموذجًا تجريبيًا"]},
-   {v:"help", t:["Whether outside support is needed","هل نحتاج دعمًا خارجيًا"]},
-   {v:"none", t:["No decision identified yet","لم يُحدَّد قرار بعد"]}]},
+   {v:"unsure", t:["Not sure yet","غير متأكدين بعد"]}]},
+ {id:"e2", branch:"explorer", sec:["Where to look","مجالات التركيز"], text:["What should 60 days of exploring let your organization decide?","ما القرار الذي تسعى جهتكم لاتخاذه بعد 60 يومًا من الاستكشاف؟"], type:"single", opts:[
+   {v:"material", t:["Whether the problem is material enough to address","تحديد ما إذا كانت المشكلة جوهرية وتستحق المعالجة"]},
+   {v:"prioritize", t:["Which use case should come first","تحديد حالة الاستخدام ذات الأولوية"]},
+   {v:"data", t:["Whether usable data exists","التحقق من توفر بيانات صالحة للاستخدام"]},
+   {v:"fund", t:["Whether to fund a proof of concept","اعتماد تمويل نموذج إثبات الجدوى"]},
+   {v:"help", t:["Whether outside support is needed","تقييم الحاجة إلى دعم خارجي"]},
+   {v:"none", t:["No decision identified yet","لم يُحدَّد القرار بعد"]}]},
  /* ---- core tail (sensitive last) ---- */
- {id:"q7", sec:["Decisions","القرارات"], text:["If this moves forward, which part would you personally play?","إذا مضى هذا قدمًا، أي دور ستؤدونه شخصيًا؟"], type:"single", opts:[
-   {v:"approve", t:["I own the outcome and can approve PoC spend","أملك النتيجة وأستطيع اعتماد ميزانية النموذج"], s:["within a delegated limit","ضمن حد مفوَّض"]},
-   {v:"sponsor", t:["I own the outcome; a named sponsor controls the spend","أملك النتيجة، وراعٍ محدد يملك قرار الصرف"]},
-   {v:"arrange", t:["I can recommend it and arrange access to the sponsor","أستطيع التوصية به وترتيب الوصول إلى الراعي"]},
-   {v:"input", t:["I provide technical, data, or procurement input","أقدّم مدخلات تقنية أو بيانات أو مشتريات"]},
-   {v:"nomandate", t:["I'm exploring without an internal mandate","أستكشف دون تكليف داخلي"]}]},
- {id:"q8", sec:["Decisions","القرارات"], text:["What must happen before a paid PoC can start?","ما الذي يجب أن يحدث قبل بدء نموذج تجريبي مدفوع؟"], type:"single", opts:[
-   {v:"none", t:["Nothing beyond my own authority","لا شيء يتجاوز صلاحيتي"]},
-   {v:"one", t:["One named sponsor approves","موافقة راعٍ واحد محدد"], s:["and I can bring them to the next conversation","وأستطيع إحضاره إلى المحادثة القادمة"]},
-   {v:"several", t:["Several functions approve","موافقة جهات عدة"], s:["owners and sequence are known","الأشخاص والتسلسل معروفان"]},
-   {v:"unclear", t:["Approval is needed, but owners are still unclear","الموافقة مطلوبة، لكن أصحابها غير واضحين بعد"]},
-   {v:"procurement", t:["A formal procurement or tender first","مشتريات رسمية أو مناقصة أولًا"]},
-   {v:"undiscussed", t:["We haven't discussed it internally yet","لم نناقشه داخليًا بعد"]}]},
- {id:"q9", sec:["Decisions","القرارات"], text:["Which is true today about funding a PoC?","أي عبارة صحيحة اليوم بشأن تمويل النموذج التجريبي؟"], hint:["Separate from any later production rollout.","بمعزل عن أي نشر إنتاجي لاحق."], type:"single", opts:[
+ {id:"q7", sec:["Decisions","صناعة القرار"], text:["If this moves forward, which part would you personally play?","في حال المضي قدمًا في هذا المشروع، ما هو الدور الذي ستتولونه شخصيًا؟"], type:"single", opts:[
+   {v:"approve", t:["I own the outcome and can approve PoC spend","أنا المالك للمخرجات، وأملك صلاحية اعتماد ميزانية النموذج التجريبي"], s:["within a delegated limit","ضمن حدود الصلاحيات المفوَّضة"]},
+   {v:"sponsor", t:["I own the outcome; a named sponsor controls the spend","أنا المالك للمخرجات؛ وقرار الصرف بيد صاحب صلاحية (راعٍ تنفيذي) محدد"]},
+   {v:"arrange", t:["I can recommend it and arrange access to the sponsor","أملك صلاحية التوصية بالمشروع وتسهيل التواصل مع الراعي التنفيذي"]},
+   {v:"input", t:["I provide technical, data, or procurement input","يقتصر دوري على تقديم المدخلات التقنية، أو البيانات، أو متطلبات المشتريات"]},
+   {v:"nomandate", t:["I'm exploring without an internal mandate","أقوم بالاستكشاف بصفة ودية دون تكليف رسمي داخلي"]}]},
+ {id:"q8", sec:["Decisions","صناعة القرار"], text:["What must happen before a paid PoC can start?","ما المتطلبات اللازمة قبل البدء في نموذج تجريبي مدفوع؟"], type:"single", opts:[
+   {v:"none", t:["Nothing beyond my own authority","لا توجد متطلبات تتجاوز صلاحياتي"]},
+   {v:"one", t:["One named sponsor approves","موافقة صاحب صلاحية (راعٍ تنفيذي) محدد"], s:["and I can bring them to the next conversation","ويمكنني دعوته للاجتماع القادم"]},
+   {v:"several", t:["Several functions approve","موافقة عدة إدارات أو جهات"], s:["owners and sequence are known","وأصحاب الصلاحية وتسلسل الاعتماد معروفون"]},
+   {v:"unclear", t:["Approval is needed, but owners are still unclear","الموافقة مطلوبة، لكن أصحاب الصلاحية غير محددين بعد"]},
+   {v:"procurement", t:["A formal procurement or tender first","طرح مناقصة أو إجراءات مشتريات رسمية أولًا"]},
+   {v:"undiscussed", t:["We haven't discussed it internally yet","لم نناقش الأمر داخليًا بعد"]}]},
+ {id:"q9", sec:["Decisions","صناعة القرار"], text:["Which is true today about funding a PoC?","أيٌّ من العبارات التالية يصف بدقة حالة تمويل النموذج التجريبي حاليًا؟"], hint:["Separate from any later production rollout.","(بمعزل عن ميزانية النشر الإنتاجي اللاحق)."], type:"single", opts:[
    {v:"approved", t:["A budget is approved","الميزانية معتمدة"]},
-   {v:"reserved", t:["A range is reserved; final release pending","نطاق محجوز، والإفراج النهائي قيد الانتظار"]},
-   {v:"case", t:["No allocation yet; a named sponsor would consider a case","لا مخصصات بعد، وراعٍ محدد سيدرس الجدوى"]},
-   {v:"route", t:["A funding route exists, but timing is unknown","مسار تمويل موجود، لكن توقيته غير معروف"]},
-   {v:"nopath", t:["No funding route exists today","لا مسار تمويل اليوم"]},
-   {v:"private", t:["I'd rather discuss this in the meeting","أفضّل مناقشته في الاجتماع"]}]},
- {id:"q10", sec:["Decisions","القرارات"], text:["If the assessment shows a viable PoC, what could you provide within ten business days?","إذا أظهر التقييم جدوى النموذج التجريبي، ما الذي يمكنكم توفيره خلال عشرة أيام عمل؟"], type:"single", opts:[
-   {v:"full", t:["Sponsor access, a process expert, and a representative data sample","وصول إلى الراعي، وخبير بالإجراء، وعيّنة بيانات ممثلة"]},
-   {v:"sponsor", t:["Sponsor access and an expert","وصول إلى الراعي وخبير"], s:["data approval may take longer","اعتماد البيانات قد يستغرق وقتًا أطول"]},
-   {v:"workshop", t:["Participants for a discovery workshop","مشاركون في ورشة استكشاف"]},
-   {v:"contact", t:["One point of contact for now","نقطة تواصل واحدة حاليًا"]},
-   {v:"info", t:["Information only; not ready to commit resources","معلومات فقط، لسنا جاهزين لتخصيص موارد"]}]},
+   {v:"reserved", t:["A range is reserved; final release pending","الميزانية التقديرية محجوزة، وبانتظار الاعتماد النهائي"]},
+   {v:"case", t:["No allocation yet; a named sponsor would consider a case","لا توجد مخصصات مالية بعد؛ وسيدرس الراعي التنفيذي جدوى المشروع"]},
+   {v:"route", t:["A funding route exists, but timing is unknown","يوجد مسار للتمويل، لكن الإطار الزمني غير معروف"]},
+   {v:"nopath", t:["No funding route exists today","لا يوجد مسار للتمويل حاليًا"]},
+   {v:"private", t:["I'd rather discuss this in the meeting","أفضّل مناقشة ذلك خلال الاجتماع"]}]},
+ {id:"q10", sec:["Decisions","صناعة القرار"], text:["If the assessment shows a viable PoC, what could you provide within ten business days?","إذا أظهر التقييم جدوى النموذج التجريبي، ما الذي يمكن لجهتكم توفيره خلال عشرة أيام عمل؟"], type:"single", opts:[
+   {v:"full", t:["Sponsor access, a process expert, and a representative data sample","تسهيل التواصل مع الراعي التنفيذي، وتوفير خبير بإجراءات العمل، وعيّنة بيانات ممثلة"]},
+   {v:"sponsor", t:["Sponsor access and an expert","تسهيل التواصل مع الراعي التنفيذي، وتوفير خبير"], s:["data approval may take longer","(اعتماد البيانات قد يستغرق وقتًا أطول)"]},
+   {v:"workshop", t:["Participants for a discovery workshop","ترشيح مشاركين لحضور ورشة عمل استكشافية"]},
+   {v:"contact", t:["One point of contact for now","تحديد نقطة تواصل واحدة حاليًا"]},
+   {v:"info", t:["Information only; not ready to commit resources","تقديم المعلومات فقط؛ لسنا جاهزين لتخصيص الموارد بعد"]}]},
  /* ---- gov overlay ---- */
- {id:"g1", overlay:"gov", sec:["Public sector","القطاع الحكومي"], text:["What is the most sensitive information a PoC might touch?","ما أكثر المعلومات حساسية قد يلمسها النموذج التجريبي؟"], type:"single", opts:[
-   {v:"public", t:["Public or open information","معلومات عامة أو مفتوحة"]},
-   {v:"internal", t:["Internal, non-personal information","معلومات داخلية غير شخصية"]},
-   {v:"confidential", t:["Confidential or commercially restricted","سرية أو مقيدة تجاريًا"]},
+ {id:"g1", overlay:"gov", sec:["Public sector","القطاع الحكومي"], text:["What is the most sensitive information a PoC might touch?","ما هي أعلى درجة حساسية للمعلومات التي قد يتعامل معها النموذج التجريبي؟"], type:"single", opts:[
+   {v:"public", t:["Public or open information","معلومات عامة أو بيانات مفتوحة"]},
+   {v:"internal", t:["Internal, non-personal information","معلومات داخلية (غير شخصية)"]},
+   {v:"confidential", t:["Confidential or commercially restricted","معلومات سرية أو ذات قيود تجارية"]},
    {v:"personal", t:["Personal information","بيانات شخصية"]},
    {v:"sensitive", t:["Sensitive personal information","بيانات شخصية حساسة"]},
-   {v:"classified", t:["Classified or national-security information","معلومات مصنفة أو تخص الأمن الوطني"]},
+   {v:"classified", t:["Classified or national-security information","معلومات مصنفة أو متعلقة بالأمن الوطني"]},
    {v:"unknown", t:["Not assessed yet","لم تُقيَّم بعد"]}]},
- {id:"g2", overlay:"gov", sec:["Public sector","القطاع الحكومي"], text:["Which route could legally allow a paid PoC to start?","أي مسار يتيح نظاميًا بدء نموذج تجريبي مدفوع؟"], type:"single", opts:[
-   {v:"framework", t:["An existing framework or call-off agreement","اتفاقية إطارية قائمة أو أمر إسناد"]},
-   {v:"direct", t:["Direct award below a threshold","إسناد مباشر دون حدٍّ معيّن"]},
-   {v:"rfq", t:["A quotation or three-quote process","طلب عروض أسعار أو ثلاثة عروض"]},
-   {v:"tender", t:["A formal tender","مناقصة رسمية"]},
-   {v:"sandbox", t:["An innovation, sandbox, or pilot route","مسار ابتكار أو بيئة تجريبية معتمدة"]},
+ {id:"g2", overlay:"gov", sec:["Public sector","القطاع الحكومي"], text:["Which route could legally allow a paid PoC to start?","ما هو المسار النظامي الذي يتيح البدء في نموذج تجريبي مدفوع؟"], type:"single", opts:[
+   {v:"framework", t:["An existing framework or call-off agreement","اتفاقية إطارية قائمة أو أمر إسناد (Call-off)"]},
+   {v:"direct", t:["Direct award below a threshold","إسناد مباشر (دون سقف مالي محدد)"]},
+   {v:"rfq", t:["A quotation or three-quote process","طلب عروض أسعار (أو نظام العروض الثلاثة)"]},
+   {v:"tender", t:["A formal tender","طرح مناقصة رسمية"]},
+   {v:"sandbox", t:["An innovation, sandbox, or pilot route","مسار ابتكار، أو بيئة تجريبية (Sandbox)، أو مشروع ريادي"]},
    {v:"unconfirmed", t:["The route isn't confirmed yet","المسار غير مؤكد بعد"]},
-   {v:"norout", t:["No paid route is currently available","لا مسار مدفوع متاح حاليًا"]}]}
+   {v:"norout", t:["No paid route is currently available","لا يتوفر مسار مدفوع حاليًا"]}]}
 ];
 
 /* ================= FLOW ENGINE ================= */
@@ -613,7 +613,7 @@ function render(){
         w.appendChild(el); w.appendChild(dl);
       }else{
         el=document.createElement("select");
-        const ph=document.createElement("option"); ph.value=""; ph.textContent=T("Select…","اختاروا…"); el.appendChild(ph);
+        const ph=document.createElement("option"); ph.value=""; ph.textContent=T("Select…","يرجى الاختيار..."); el.appendChild(ph);
         list.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;el.appendChild(o);});
         w.appendChild(el);
       }
@@ -634,10 +634,10 @@ function deterministicInsight(a){
   const route=routeOf(a);
   if(lang==="ar"){
     if(route==="problem"){
-      const ev={finance:"مقاسة", sample:"مقاسة", calculated:"محسوبة", estimate:"مقدَّرة", none:"غير مقاسة", nonfinancial:"يصعب تسعيرها"}[a.q5]||"حقيقية";
-      return "أنتم تتحملون كلفة "+ev+" في إجراء تستطيعون وصفه بحادثة محددة. وهذا أندر مما تظنون: معظم الجهات لا تستطيع الإشارة إلى موضع الألم تحديدًا. أنتم تستطيعون.";
+      const ev={finance:"مقاسة", sample:"مقاسة", calculated:"محسوبة", estimate:"مقدَّرة", none:"غير مقاسة", nonfinancial:"يصعب تقديرها"}[a.q5]||"فعلية";
+      return "تتحملون كلفة "+ev+" في سير عمل يمكنكم وصفه بواقعة محددة، وهذا أندر مما تظنون؛ فمعظم الجهات لا تستطيع تحديد موضع الخلل بدقة، وأنتم تستطيعون.";
     }
-    return "أنتم في مرحلة أبكر مما تشعرون، وهذه ميزة: فالجهات التي تتعثر هي التي اشترت الإجابات قبل أن تفهم أسئلتها.";
+    return "أنتم في مرحلة أبكر مما تتصورون، وهذه ميزة؛ فالجهات التي تتعثر هي التي اشترت الحلول قبل أن تحدد أسئلتها.";
   }
   if(route==="problem"){
     const ev={finance:"a measured", sample:"a measured", calculated:"a calculated", estimate:"an estimated", none:"an unmeasured", nonfinancial:"a hard-to-price"}[a.q5]||"a real";
