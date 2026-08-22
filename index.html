@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>AIsuperpowers · Prepare Your Session</title>
+<!-- AIS Fit Assessment app v2 (2026-08-22). Spec: SPEC.md in AIspowers/lead-assessment (private).
+     v2 = Codex evidence-doctrine: score evidence not claims; firmographics route, never score;
+     sensitive questions last; contradiction caps server-side. Design: ais-portfolio v7 tokens.
+     No secrets here: RELAY_TOKEN is an abuse gate only; scoring + analysis are server-side. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFBF2; --ink:#141B26; --ink2:#3E4A5C; --mute:#7C8798;
+  --rule:#DCD2BE; --rule2:#C9BEA6; --ghost:rgba(20,27,38,.07);
+  --accent:#EA580C; --plate:#FFFBEB;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,"Segoe UI",sans-serif;
+  font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100svh}
+.serif{font-family:"Playfair Display",Georgia,serif}
+.caps{font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--mute)}
+.wrap{max-width:560px;margin:0 auto;padding:0 22px calc(30px + env(safe-area-inset-bottom))}
+
+.screen{display:none;animation:fade .25s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.screen{animation:none}}
+
+/* ---------- welcome ---------- */
+.firm{font-size:21px;font-weight:700;letter-spacing:-.02em;padding-top:34px}
+.firm b{color:var(--accent);font-weight:700}
+.hero h1{font-family:"Playfair Display",serif;font-weight:500;font-size:clamp(30px,8vw,40px);line-height:1.14;margin:34px 0 14px}
+.hero .lead{color:var(--ink2);font-size:16.5px;max-width:44ch;margin:0 0 26px}
+.hero .titlerule{border:none;border-top:1px solid var(--ink);width:64px;margin:0 0 26px}
+.meta3{list-style:none;margin:0 0 30px;padding:0}
+.meta3 li{position:relative;padding-left:24px;margin:0 0 10px;color:var(--ink2);font-size:15px}
+.meta3 li::before{content:"";position:absolute;left:0;top:.48em;width:9px;height:9px;background:var(--accent);border-radius:2px}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.field input,.field select{width:100%;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink);
+  background:var(--plate);border:1px solid var(--rule2);border-radius:6px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.privacy{font-size:12.5px;color:var(--mute);margin:18px 0 22px;max-width:46ch}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 18px;
+  font:inherit;font-size:16px;font-weight:600;color:var(--paper);background:var(--ink);
+  border:none;border-radius:6px;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn.accent{background:var(--accent)}
+.btn[disabled]{opacity:.45;cursor:default}
+.btn.ghostbtn{background:none;color:var(--ink2);border:1px solid var(--rule2)}
+
+/* ---------- quiz ---------- */
+.qtop{display:flex;align-items:center;gap:14px;padding:22px 0 8px;position:sticky;top:0;background:var(--paper);z-index:5}
+.backbtn{flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--rule2);background:var(--plate);
+  color:var(--ink2);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.progress{flex:1}
+.pbar{height:4px;background:var(--ghost);border-radius:2px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0%;background:var(--accent);border-radius:2px;transition:width .25s ease}
+.pcount{font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--mute);margin-top:6px;text-transform:uppercase}
+.qsec{font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:22px 0 10px}
+.qtext{font-family:"Playfair Display",serif;font-size:clamp(21px,5.6vw,26px);font-weight:500;line-height:1.32;margin:0 0 6px;text-wrap:pretty}
+.qhint{font-size:14px;color:var(--mute);margin:0 0 20px}
+.opts{display:flex;flex-direction:column;gap:10px;padding-bottom:26px}
+.opt{display:flex;align-items:flex-start;gap:13px;text-align:left;width:100%;padding:14px 15px;
+  font:inherit;font-size:15.5px;line-height:1.45;color:var(--ink);background:var(--plate);
+  border:1px solid var(--rule2);border-radius:8px;cursor:pointer}
+.opt .chip{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--rule2);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--mute);margin-top:1px}
+.opt.sel{border-color:var(--accent);background:#FFF3E8}
+.opt.sel .chip{background:var(--accent);border-color:var(--accent);color:#fff}
+.opt small{display:block;color:var(--mute);font-size:12.5px;margin-top:2px}
+textarea.freetext{width:100%;min-height:130px;padding:14px;font:inherit;font-size:16px;line-height:1.55;color:var(--ink);
+  background:var(--plate);border:1px solid var(--rule2);border-radius:8px;outline:none;resize:vertical}
+textarea.freetext:focus,input.shorttext:focus{border-color:var(--accent)}
+input.shorttext{width:100%;padding:14px;font:inherit;font-size:16px;color:var(--ink);
+  background:var(--plate);border:1px solid var(--rule2);border-radius:8px;outline:none}
+.charnote{font-size:12px;color:var(--mute);margin:8px 0 16px}
+.charnote.ok{color:#166534}
+.qactions{padding:4px 0 34px}
+.qactions .btn + .btn{margin-top:10px}
+
+/* ---------- compute / insight ---------- */
+.center{min-height:72svh;display:flex;flex-direction:column;justify-content:center}
+.spin{width:44px;height:44px;border-radius:50%;border:3px solid var(--ghost);border-top-color:var(--accent);
+  animation:spin 1s linear infinite;margin-bottom:26px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.compute h2,.insight h2{font-family:"Playfair Display",serif;font-weight:500;font-size:26px;margin:0 0 10px}
+.compute p{color:var(--ink2);max-width:40ch}
+.insightline{font-family:"Playfair Display",serif;font-size:19.5px;line-height:1.6;color:var(--ink);
+  border-left:2px solid var(--accent);padding-left:16px;margin:22px 0 26px;max-width:36em}
+.insight .after{color:var(--ink2);font-size:15px;max-width:44ch;margin-bottom:30px}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);font-size:10.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- WELCOME -->
+  <section class="screen on" id="s-welcome">
+    <div class="firm">AI<b>superpowers</b></div>
+    <div class="hero">
+      <h1>Let's prepare your first session properly.</h1>
+      <hr class="titlerule">
+      <p class="lead">About five minutes. It helps us decide whether a focused 90-day proof of concept makes sense, and it means we arrive at your first conversation with thinking, not a pitch. "Not sure yet" is always a valid answer.</p>
+      <ul class="meta3">
+        <li><b>Five minutes</b>, mostly taps, one written answer.</li>
+        <li>Your answers shape a <b>prepared first conversation</b>.</li>
+        <li>You get an <b>immediate observation</b> at the end.</li>
+      </ul>
+    </div>
+    <div class="field"><label for="f-name">Your name</label><input id="f-name" autocomplete="name" placeholder="Full name"></div>
+    <div class="field"><label for="f-org">Organization</label><input id="f-org" autocomplete="organization" placeholder="Company or entity"></div>
+    <div class="field"><label for="f-email">Work email</label><input id="f-email" type="email" autocomplete="email" placeholder="you@company.com"></div>
+    <p class="privacy">Your answers are planning inputs used to prepare your session with us. They are not shared outside AIsuperpowers, and they are not a binding scope or quote.</p>
+    <button class="btn accent" id="startbtn">Begin</button>
+    <div class="foot"><span>AIsuperpowers</span><span>Fit Assessment</span></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen" id="s-quiz">
+    <div class="qtop">
+      <button class="backbtn" id="backbtn" aria-label="Back">&#8592;</button>
+      <div class="progress"><div class="pbar"><i id="pfill"></i></div><div class="pcount" id="pcount"></div></div>
+    </div>
+    <div class="qsec" id="qsec"></div>
+    <div class="qtext" id="qtext"></div>
+    <div class="qhint" id="qhint"></div>
+    <div class="opts" id="opts"></div>
+    <div class="qactions" id="qactions"></div>
+  </section>
+
+  <!-- COMPUTE -->
+  <section class="screen" id="s-compute">
+    <div class="center compute">
+      <div class="spin"></div>
+      <h2>Reading your answers&hellip;</h2>
+      <p id="computenote">We are preparing an observation for you. A few seconds.</p>
+    </div>
+  </section>
+
+  <!-- INSIGHT -->
+  <section class="screen" id="s-insight">
+    <div class="center insight">
+      <div class="firm">AI<b>superpowers</b></div>
+      <h2 style="margin-top:30px">One observation before we meet.</h2>
+      <blockquote class="insightline" id="insighttext"></blockquote>
+      <p class="after">Aws Naser will come to your first conversation already prepared: your situation read, a direction sketched. We will be in touch shortly to set the time.</p>
+      <div class="foot"><span>AIsuperpowers</span><span id="reffoot"></span></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+/* ================= CONFIG ================= */
+const RELAY_URL = ""; /* set at deploy: Apps Script /exec URL */
+const RELAY_TOKEN = "ais-fit-2026";
+const MIN_EXAMPLE_CHARS = 40;
+
+/* ================= QUESTION SET (SPEC v2 §6) ================= */
+const COUNTRIES = ["Oman","Saudi Arabia","United Arab Emirates","Qatar","Kuwait","Bahrain","Jordan","Egypt","Iraq","Turkey","United Kingdom","Germany","France","Netherlands","Poland","Spain","Italy","United States","Canada","India","Pakistan","Singapore","Malaysia","Australia","Other"];
+const SECTORS = ["Government / public services","Banking & finance","Insurance","Energy & utilities","Logistics & transport","Manufacturing","Healthcare","Education","Retail & e-commerce","Media & advertising","Telecom & technology","Construction & real estate","Professional services","Other"];
+
+const QS = [
+ /* ---- core head ---- */
+ {id:"q1", sec:"About you", text:"What kind of organization are you?", type:"single", opts:[
+   {v:"gov", t:"Government or public sector"},
+   {v:"ent", t:"Private enterprise", s:"200+ people"},
+   {v:"sme", t:"Small or mid-size business"},
+   {v:"startup", t:"Startup"},
+   {v:"personal", t:"Exploring personally"}]},
+ {id:"q2", sec:"About you", text:"Where would this run, and in which sector?", type:"combo2",
+   a:{label:"Country", kind:"datalist", list:COUNTRIES, ph:"Start typing…"},
+   b:{label:"Sector", kind:"select", list:SECTORS}},
+ {id:"q3", sec:"The situation", text:"What happened that makes this worth examining now?", hint:"Choose the closest answer.", type:"single", opts:[
+   {v:"deadline", t:"An externally fixed deadline", s:"a regulation, contract, audit, or launch"},
+   {v:"threshold", t:"A recurring cost or service problem crossed a line"},
+   {v:"exec", t:"An executive asked for a decision or a PoC"},
+   {v:"program", t:"A funded program is selecting a use case or supplier"},
+   {v:"incident", t:"An active customer or operational incident"},
+   {v:"explore", t:"Exploration for now", s:"no event or deadline yet"}]},
+ {id:"q3b", showIf:a=>a.q3==="deadline"||a.q3==="incident", sec:"The situation",
+   text:"What is the date, and what changes if it slips?", hint:"e.g. new reporting rule effective 1 Nov; fines apply per late filing.",
+   type:"shorttext", ph:"Date, and the consequence", skipLabel:"There is no firm date"},
+ {id:"q4", sec:"The situation", text:"The most recent time this happened: what was someone trying to do, what failed, and what happened next?",
+   hint:"A real incident beats a polished summary. Two to four sentences.",
+   type:"longtext", min:MIN_EXAMPLE_CHARS, escapeLabel:"We don't have a specific example yet",
+   onEscape:a=>{a.q4=""; a.q4none=true;}, onAnswer:a=>{delete a.q4none;}},
+ {id:"q5", branch:"problem", sec:"The situation", text:"What is the evidence for the current impact?", type:"single", opts:[
+   {v:"finance", t:"Measured in a finance or operational report"},
+   {v:"sample", t:"Measured from a sample or time study"},
+   {v:"calculated", t:"Calculated", s:"from known volume × time or cost"},
+   {v:"estimate", t:"An informed estimate", s:"some inputs are missing"},
+   {v:"none", t:"Not yet estimated"},
+   {v:"nonfinancial", t:"The impact is mainly risk, quality, or service"}]},
+ {id:"q5b", branch:"problem", showIf:a=>["finance","sample","calculated"].indexOf(a.q5)>=0, sec:"The situation",
+   text:"The figure, the period, and where it comes from.", hint:"e.g. 1,200 staff-hours per month, from the queue report.",
+   type:"shorttext", ph:"Figure, period, source", skipLabel:"I'd rather share this in the meeting"},
+ {id:"q6", branch:"problem", sec:"The situation", text:"At the end of a 90-day proof of concept, which decision should the evidence support?", type:"single", opts:[
+   {v:"deploy", t:"Whether to fund and deploy a production version"},
+   {v:"feasible", t:"Whether this approach is technically feasible"},
+   {v:"case", t:"Whether the business case is strong enough"},
+   {v:"choose", t:"Which of several approaches to select"},
+   {v:"stop", t:"Whether to stop or proceed"},
+   {v:"unsure", t:"Not sure yet", x:true}]},
+ /* ---- problem branch ---- */
+ {id:"p1", branch:"problem", sec:"The ground truth", text:"Whose work changes first if this succeeds, and how much flows through that workflow monthly?", type:"combo2",
+   a:{label:"Whose work", kind:"select", list:["Front-line operations","Analysts / reviewers","Managers","Executive decisions","Customers / the public","A technical team","Mixed"]},
+   b:{label:"Cases / documents / requests per month", kind:"select", list:["Under 100","100 – 1,000","1,000 – 10,000","Over 10,000","Not measured"]}},
+ {id:"p2", branch:"problem", sec:"The ground truth", text:"What is the furthest this problem has already progressed?", type:"single", opts:[
+   {v:"discussed", t:"Discussed, but not investigated"},
+   {v:"analysis", t:"A process review or data analysis was done"},
+   {v:"prototype", t:"An internal prototype"},
+   {v:"vendor", t:"An external tool or vendor trial"},
+   {v:"poc", t:"A formal proof of concept"},
+   {v:"production", t:"A production solution exists", s:"but it is not enough"},
+   {v:"nothing", t:"Nothing attempted yet"}]},
+ {id:"p2b", branch:"problem", showIf:a=>a.p2&&a.p2!=="nothing"&&a.p2!=="discussed", sec:"The ground truth",
+   text:"What stopped it, or what remained unsolved?", type:"single", opts:[
+   {v:"data", t:"The data wasn't usable"},
+   {v:"backing", t:"No leadership backing"},
+   {v:"cost", t:"Too expensive"},
+   {v:"fit", t:"Didn't fit how we work"},
+   {v:"partial", t:"It runs, but doesn't solve enough"}]},
+ {id:"p3", branch:"problem", sec:"The ground truth", text:"Name the one measure that should decide the PoC.", hint:"The number, where it is today, where it must reach, and which report or person can verify it.",
+   type:"fields", escapeLabel:"The baseline isn't measured yet", onEscape:a=>{a.p3={};a.p3none=true;}, onAnswer:a=>{delete a.p3none;},
+   fields:[{key:"metric",label:"The measure",ph:"e.g. clearance turnaround"},
+           {key:"move",label:"From where to where",ph:"e.g. from 4 days to same-day"},
+           {key:"source",label:"Verified by",ph:"e.g. the operations queue report"}]},
+ {id:"p4", branch:"problem", sec:"The ground truth", text:"Which statement best describes the data needed to run and judge the PoC?", type:"single", opts:[
+   {v:"ready", t:"In a named system; owner and a representative sample available within two weeks"},
+   {v:"unapproved", t:"It exists and the owner is known, but access isn't approved"},
+   {v:"scattered", t:"Spread across files, email, or several systems"},
+   {v:"nolabels", t:"Inputs exist, but accepted outcomes aren't recorded"},
+   {v:"create", t:"It would have to be newly collected or created"},
+   {v:"captive", t:"It cannot leave our environment"},
+   {v:"unknown", t:"We don't know yet"}]},
+ {id:"p5", branch:"problem", sec:"The ground truth", text:"Which of these are hard requirements?", hint:"Select all that apply.", type:"multi", opts:[
+   {v:"residency", t:"Data stays in a specific country or on-premise"},
+   {v:"notraining", t:"Our data must not train a provider's models"},
+   {v:"human", t:"A person must approve consequential outputs"},
+   {v:"audit", t:"Outputs need sources or an audit trail"},
+   {v:"integration", t:"Must plug into a live system"},
+   {v:"security", t:"Security or legal approval before any data access"},
+   {v:"language", t:"Arabic or another language is required"},
+   {v:"none", t:"None of these", x:true},
+   {v:"unsure", t:"Not sure", x:true}]},
+ /* ---- explorer branch ---- */
+ {id:"e1", branch:"explorer", sec:"Where to look", text:"Which workflow is most worth investigating first?", type:"single", opts:[
+   {v:"requests", t:"Customer or citizen requests"},
+   {v:"documents", t:"Document or case handling"},
+   {v:"knowledge", t:"Knowledge search and answers"},
+   {v:"forecasting", t:"Forecasting or prioritization"},
+   {v:"quality", t:"Quality or compliance review"},
+   {v:"productivity", t:"Employee productivity"},
+   {v:"unsure", t:"Not sure yet"}]},
+ {id:"e2", branch:"explorer", sec:"Where to look", text:"What should 60 days of exploring let your organization decide?", type:"single", opts:[
+   {v:"material", t:"Whether the problem is material enough to address"},
+   {v:"prioritize", t:"Which use case should come first"},
+   {v:"data", t:"Whether usable data exists"},
+   {v:"fund", t:"Whether to fund a proof of concept"},
+   {v:"help", t:"Whether outside support is needed"},
+   {v:"none", t:"No decision identified yet"}]},
+ /* ---- core tail (sensitive last) ---- */
+ {id:"q7", sec:"Decisions", text:"If this moves forward, which part would you personally play?", type:"single", opts:[
+   {v:"approve", t:"I own the outcome and can approve PoC spend", s:"within a delegated limit"},
+   {v:"sponsor", t:"I own the outcome; a named sponsor controls the spend"},
+   {v:"arrange", t:"I can recommend it and arrange access to the sponsor"},
+   {v:"input", t:"I provide technical, data, or procurement input"},
+   {v:"nomandate", t:"I'm exploring without an internal mandate"}]},
+ {id:"q8", sec:"Decisions", text:"What must happen before a paid PoC can start?", type:"single", opts:[
+   {v:"none", t:"Nothing beyond my own authority"},
+   {v:"one", t:"One named sponsor approves", s:"and I can bring them to the next conversation"},
+   {v:"several", t:"Several functions approve", s:"owners and sequence are known"},
+   {v:"unclear", t:"Approval is needed, but owners are still unclear"},
+   {v:"procurement", t:"A formal procurement or tender first"},
+   {v:"undiscussed", t:"We haven't discussed it internally yet"}]},
+ {id:"q9", sec:"Decisions", text:"Which is true today about funding a PoC?", hint:"Separate from any later production rollout.", type:"single", opts:[
+   {v:"approved", t:"A budget is approved"},
+   {v:"reserved", t:"A range is reserved; final release pending"},
+   {v:"case", t:"No allocation yet; a named sponsor would consider a case"},
+   {v:"route", t:"A funding route exists, but timing is unknown"},
+   {v:"nopath", t:"No funding route exists today"},
+   {v:"private", t:"I'd rather discuss this in the meeting"}]},
+ {id:"q10", sec:"Decisions", text:"If the assessment shows a viable PoC, what could you provide within ten business days?", type:"single", opts:[
+   {v:"full", t:"Sponsor access, a process expert, and a representative data sample"},
+   {v:"sponsor", t:"Sponsor access and an expert", s:"data approval may take longer"},
+   {v:"workshop", t:"Participants for a discovery workshop"},
+   {v:"contact", t:"One point of contact for now"},
+   {v:"info", t:"Information only; not ready to commit resources"}]},
+ /* ---- gov overlay ---- */
+ {id:"g1", overlay:"gov", sec:"Public sector", text:"What is the most sensitive information a PoC might touch?", type:"single", opts:[
+   {v:"public", t:"Public or open information"},
+   {v:"internal", t:"Internal, non-personal information"},
+   {v:"confidential", t:"Confidential or commercially restricted"},
+   {v:"personal", t:"Personal information"},
+   {v:"sensitive", t:"Sensitive personal information"},
+   {v:"classified", t:"Classified or national-security information"},
+   {v:"unknown", t:"Not assessed yet"}]},
+ {id:"g2", overlay:"gov", sec:"Public sector", text:"Which route could legally allow a paid PoC to start?", type:"single", opts:[
+   {v:"framework", t:"An existing framework or call-off agreement"},
+   {v:"direct", t:"Direct award below a threshold"},
+   {v:"rfq", t:"A quotation or three-quote process"},
+   {v:"tender", t:"A formal tender"},
+   {v:"sandbox", t:"An innovation, sandbox, or pilot route"},
+   {v:"unconfirmed", t:"The route isn't confirmed yet"},
+   {v:"norout", t:"No paid route is currently available"}]}
+];
+
+/* ================= FLOW ENGINE ================= */
+function routeOf(a){
+  if(a.q4none) return "explorer";
+  if(typeof a.q4==="string" && a.q4.trim().length>0) return "problem";
+  return null;
+}
+function sequence(a){
+  const route = routeOf(a);
+  const seq = [];
+  for(const q of QS){
+    if(q.branch && q.branch!==route) continue;
+    if(q.overlay==="gov" && a.q1!=="gov") continue;
+    if(q.showIf && !q.showIf(a)) continue;
+    seq.push(q);
+  }
+  return seq;
+}
+
+/* ================= STATE ================= */
+const $=id=>document.getElementById(id);
+const screens={welcome:$("s-welcome"),quiz:$("s-quiz"),compute:$("s-compute"),insight:$("s-insight")};
+let state={contact:{name:"",org:"",email:""}, answers:{}, i:0, ref:null, done:false};
+try{const s=JSON.parse(localStorage.getItem("ais-fit")||"null"); if(s&&s.answers) state=s;}catch(e){}
+function save(){try{localStorage.setItem("ais-fit",JSON.stringify(state))}catch(e){}}
+function show(k){for(const s in screens) screens[s].classList.remove("on"); screens[k].classList.add("on"); window.scrollTo({top:0,behavior:"instant"});}
+function makeRef(){
+  const c="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; let r="AIS-";
+  for(let i=0;i<5;i++) r+=c[Math.floor(Math.random()*c.length)];
+  return r;
+}
+
+/* ================= RENDER ================= */
+function advance(){ state.i++; save(); render(); }
+function render(){
+  const seq=sequence(state.answers);
+  if(state.i>=seq.length){ submit(); return; }
+  const q=seq[state.i];
+  $("pfill").style.width=Math.round((state.i)/seq.length*100)+"%";
+  $("pcount").textContent=(state.i+1)+" of ~"+seq.length;
+  $("qsec").textContent=q.sec||"";
+  $("qtext").textContent=q.text;
+  $("qhint").textContent=q.hint||"";
+  const opts=$("opts"), actions=$("qactions");
+  opts.innerHTML=""; actions.innerHTML="";
+  const a=state.answers;
+
+  if(q.type==="single"){
+    q.opts.forEach((o,idx)=>{
+      const b=document.createElement("button");
+      b.className="opt"+(a[q.id]===o.v?" sel":"");
+      b.innerHTML='<span class="chip">'+String.fromCharCode(65+idx)+'</span><span>'+o.t+(o.s?'<small>'+o.s+'</small>':'')+'</span>';
+      b.onclick=()=>{ a[q.id]=o.v; advance(); };
+      opts.appendChild(b);
+    });
+  }
+  else if(q.type==="multi"){
+    const cur=new Set(a[q.id]||[]);
+    q.opts.forEach((o,idx)=>{
+      const b=document.createElement("button");
+      b.className="opt"+(cur.has(o.v)?" sel":"");
+      b.innerHTML='<span class="chip">'+String.fromCharCode(65+idx)+'</span><span>'+o.t+(o.s?'<small>'+o.s+'</small>':'')+'</span>';
+      b.onclick=()=>{
+        if(o.x){ cur.clear(); cur.add(o.v); }               /* exclusive options (none / not sure) */
+        else{ q.opts.filter(z=>z.x).forEach(z=>cur.delete(z.v)); cur.has(o.v)?cur.delete(o.v):cur.add(o.v); }
+        a[q.id]=[...cur]; save(); render();
+      };
+      opts.appendChild(b);
+    });
+    const c=document.createElement("button");
+    c.className="btn accent"; c.textContent="Continue";
+    c.disabled=cur.size===0;
+    c.onclick=advance;
+    actions.appendChild(c);
+  }
+  else if(q.type==="longtext"){
+    const t=document.createElement("textarea");
+    t.className="freetext"; t.value=a[q.id]||""; t.placeholder="What happened, who was involved, what it cost…";
+    const note=document.createElement("div"); note.className="charnote";
+    const c=document.createElement("button"); c.className="btn accent"; c.textContent="Continue";
+    const upd=()=>{
+      const n=t.value.trim().length;
+      const ok=n>=q.min;
+      note.textContent= ok ? "Good. That is enough to work with." : "A little more detail helps us prepare ("+n+"/"+q.min+")";
+      note.className="charnote"+(ok?" ok":"");
+      c.disabled=!ok;
+    };
+    t.oninput=()=>{ a[q.id]=t.value; if(q.onAnswer) q.onAnswer(a); save(); upd(); };
+    c.onclick=()=>{ if(q.onAnswer) q.onAnswer(a); advance(); };
+    upd();
+    opts.appendChild(t); opts.appendChild(note); actions.appendChild(c);
+    if(q.escapeLabel){
+      const e=document.createElement("button"); e.className="btn ghostbtn"; e.textContent=q.escapeLabel;
+      e.onclick=()=>{ q.onEscape(a); advance(); };
+      actions.appendChild(e);
+    }
+  }
+  else if(q.type==="shorttext"){
+    const t=document.createElement("input");
+    t.className="shorttext"; t.value=a[q.id]||""; t.placeholder=q.ph||"";
+    const c=document.createElement("button"); c.className="btn accent"; c.textContent="Continue";
+    const upd=()=>{ c.disabled=(t.value.trim().length<3); };
+    t.oninput=()=>{ a[q.id]=t.value; save(); upd(); };
+    c.onclick=advance;
+    upd();
+    opts.appendChild(t); actions.appendChild(c);
+    if(q.skipLabel){
+      const skip=document.createElement("button"); skip.className="btn ghostbtn"; skip.textContent=q.skipLabel;
+      skip.onclick=()=>{ a[q.id]=""; advance(); };
+      actions.appendChild(skip);
+    }
+  }
+  else if(q.type==="fields"){
+    const c=document.createElement("button"); c.className="btn accent"; c.textContent="Continue";
+    const upd=()=>{ const v=a[q.id]||{}; c.disabled=!q.fields.every(f=>v[f.key]&&v[f.key].trim().length>=2); };
+    q.fields.forEach(f=>{
+      const w=document.createElement("div"); w.className="field";
+      const l=document.createElement("label"); l.textContent=f.label; w.appendChild(l);
+      const el=document.createElement("input"); el.placeholder=f.ph||"";
+      const cur=(a[q.id]||{})[f.key]; if(cur) el.value=cur;
+      el.oninput=()=>{ a[q.id]=Object.assign({},a[q.id],{[f.key]:el.value}); if(q.onAnswer) q.onAnswer(a); save(); upd(); };
+      w.appendChild(el); opts.appendChild(w);
+    });
+    c.onclick=()=>{ if(q.onAnswer) q.onAnswer(a); advance(); };
+    upd(); actions.appendChild(c);
+    if(q.escapeLabel){
+      const e=document.createElement("button"); e.className="btn ghostbtn"; e.textContent=q.escapeLabel;
+      e.onclick=()=>{ q.onEscape(a); advance(); };
+      actions.appendChild(e);
+    }
+  }
+  else if(q.type==="combo2"){
+    const mk=(spec,key)=>{
+      const w=document.createElement("div"); w.className="field";
+      const l=document.createElement("label"); l.textContent=spec.label; w.appendChild(l);
+      let el;
+      if(spec.kind==="datalist"){
+        el=document.createElement("input"); el.setAttribute("list","dl-"+q.id+key); el.placeholder=spec.ph||"";
+        const dl=document.createElement("datalist"); dl.id="dl-"+q.id+key;
+        spec.list.forEach(x=>{const o=document.createElement("option");o.value=x;dl.appendChild(o);});
+        w.appendChild(el); w.appendChild(dl);
+      }else{
+        el=document.createElement("select");
+        const ph=document.createElement("option"); ph.value=""; ph.textContent="Select…"; el.appendChild(ph);
+        spec.list.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;el.appendChild(o);});
+        w.appendChild(el);
+      }
+      const cur=(a[q.id]||{})[key]; if(cur) el.value=cur;
+      el.oninput=()=>{ a[q.id]=Object.assign({},a[q.id],{[key]:el.value}); save(); upd(); };
+      return w;
+    };
+    const c=document.createElement("button"); c.className="btn accent"; c.textContent="Continue";
+    const upd=()=>{ const v=a[q.id]||{}; c.disabled=!(v.a&&v.a.trim()&&v.b&&v.b.trim()); };
+    c.onclick=advance;
+    opts.appendChild(mk(q.a,"a")); opts.appendChild(mk(q.b,"b"));
+    upd(); actions.appendChild(c);
+  }
+}
+
+/* ================= SUBMIT ================= */
+function deterministicInsight(a){
+  const route=routeOf(a);
+  if(route==="problem"){
+    const ev={finance:"a measured", sample:"a measured", calculated:"a calculated", estimate:"an estimated", none:"an unmeasured", nonfinancial:"a hard-to-price"}[a.q5]||"a real";
+    return "You are carrying "+ev+" cost in a process you can already describe as a specific incident. That is rarer than you think: most organizations cannot point at the moment it hurts. You can.";
+  }
+  return "You are earlier in this than you may feel. That is an advantage: the organizations that struggle are the ones that bought answers before understanding their questions.";
+}
+function submit(){
+  if(state.done){ showInsight(state.lastInsight||deterministicInsight(state.answers)); return; }
+  show("compute");
+  state.ref=state.ref||makeRef(); save();
+  const payload={token:RELAY_TOKEN, ref:state.ref, contact:state.contact, answers:state.answers,
+                 route:routeOf(state.answers), ua:navigator.userAgent, ts:new Date().toISOString()};
+  const finish=(insight)=>{ state.done=true; state.lastInsight=insight; save(); showInsight(insight); };
+  if(!RELAY_URL){ setTimeout(()=>finish(deterministicInsight(state.answers)), 1200); return; }
+  const ctl=new AbortController(); const timer=setTimeout(()=>ctl.abort(),75000);
+  fetch(RELAY_URL,{method:"POST",body:JSON.stringify(payload),signal:ctl.signal})
+    .then(r=>r.json())
+    .then(j=>{ clearTimeout(timer); finish((j&&j.ok&&j.insight)?j.insight:deterministicInsight(state.answers)); })
+    .catch(()=>{ clearTimeout(timer); finish(deterministicInsight(state.answers)); });
+}
+function showInsight(text){
+  $("insighttext").textContent=text;
+  $("reffoot").textContent=state.ref||"";
+  show("insight");
+}
+
+/* ================= WIRING ================= */
+$("startbtn").onclick=()=>{
+  const name=$("f-name").value.trim(), org=$("f-org").value.trim(), email=$("f-email").value.trim();
+  if(!name||!org||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+    [["f-name",name],["f-org",org],["f-email",/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)?email:""]].forEach(([id,v])=>{
+      $(id).style.borderColor = v? "var(--rule2)" : "var(--accent)";
+    });
+    return;
+  }
+  state.contact={name,org,email}; state.i=0; save(); show("quiz"); render();
+};
+$("backbtn").onclick=()=>{
+  if(state.i===0){ show("welcome"); return; }
+  state.i--; save(); render();
+};
+/* resume mid-assessment */
+if(state.done){ showInsight(state.lastInsight||deterministicInsight(state.answers)); }
+else if(state.contact.email && Object.keys(state.answers).length>0){ show("quiz"); render(); }
+</script>
+</body>
+</html>
