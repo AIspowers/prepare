@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AIS Fit Assessment · Phone Tester</title>
+<!-- Desktop tester view: the live app inside a phone frame. For Aws's testing only; leads get index.html directly. -->
+<style>
+:root{ --paper:#FFFBF2; --ink:#141B26; --mute:#7C8798; --accent:#EA580C; }
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#10161F;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:Inter,-apple-system,"Segoe UI",sans-serif;padding:30px 16px}
+.cap{color:#8792A3;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
+.cap b{color:var(--accent)}
+.phone{width:398px;height:852px;max-height:92vh;background:#000;border-radius:54px;padding:12px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 0 0 2px #2A3444;position:relative}
+.notch{position:absolute;top:24px;left:50%;transform:translateX(-50%);width:120px;height:30px;background:#000;border-radius:16px;z-index:2}
+.phone iframe{width:100%;height:100%;border:none;border-radius:42px;background:var(--paper)}
+.links{margin-top:20px;font-size:12.5px;color:#8792A3}
+.links a{color:#C3CBD8;text-decoration:underline;text-underline-offset:3px}
+.links a:hover{color:#fff}
+.reset{margin-left:14px;cursor:pointer;color:#C3CBD8;background:none;border:none;font:inherit;text-decoration:underline;text-underline-offset:3px}
+.reset:hover{color:#fff}
+@media(max-height:900px){.phone{height:92vh}}
+</style>
+</head>
+<body>
+<div class="cap">AI<b>superpowers</b> · Fit Assessment · phone tester</div>
+<div class="phone">
+  <div class="notch"></div>
+  <iframe id="app" src="index.html" title="AIS Fit Assessment"></iframe>
+</div>
+<div class="links">
+  Leads get <a href="index.html">the direct link</a>.
+  <button class="reset" id="resetbtn">Start over (clear saved answers)</button>
+</div>
+<script>
+document.getElementById("resetbtn").onclick = function(){
+  try{
+    var f=document.getElementById("app");
+    f.contentWindow.localStorage.removeItem("ais-fit");
+    f.contentWindow.location.reload();
+  }catch(e){ document.getElementById("app").src="index.html?fresh="+Date.now(); }
+};
+</script>
+</body>
+</html>
