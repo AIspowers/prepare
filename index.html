@@ -151,6 +151,7 @@ input.shorttext{width:100%;padding:14px;font:inherit;font-size:16px;color:var(--
       <h2 style="margin-top:30px">One observation before we meet.</h2>
       <blockquote class="insightline" id="insighttext"></blockquote>
       <p class="after">Aws Naser will come to your first conversation already prepared: your situation read, a direction sketched. We will be in touch shortly to set the time.</p>
+      <div id="testerbox"></div>
       <div class="foot"><span>AIsuperpowers</span><span id="reffoot"></span></div>
     </div>
   </section>
@@ -498,6 +499,14 @@ function submit(){
 function showInsight(text){
   $("insighttext").textContent=text;
   $("reffoot").textContent=state.ref||"";
+  /* tester mode (?tester=1, used by phone.html): allow immediate fresh runs */
+  if(new URLSearchParams(location.search).has("tester")){
+    const tb=$("testerbox"); tb.innerHTML="";
+    const b=document.createElement("button");
+    b.className="btn ghostbtn"; b.style.marginBottom="26px"; b.textContent="Start a new test run";
+    b.onclick=()=>{ try{localStorage.removeItem("ais-fit");}catch(e){} location.reload(); };
+    tb.appendChild(b);
+  }
   show("insight");
 }
 
