@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>AIsuperpowers · Prepare Your Session</title>
-<!-- AIS Fit Assessment app v4 (2026-08-22). Spec: SPEC.md in AIspowers/lead-assessment (private).
+<title>AIsuperpowers · AI Readiness Check</title>
+<!-- AIS Fit Assessment app v5 (2026-08-24). Spec: SPEC.md in AIspowers/lead-assessment (private).
+     v5 = cold-handover intro (two screens, no presumed meeting), team voice (no personal names),
+          on-screen readiness snapshot from relay-returned deterministic levels.
      v4 = bilingual EN + formal business Arabic (fusha), RTL, Amiri + IBM Plex Sans Arabic.
      v3 = tactile paper-depth design. v2 = Codex evidence-doctrine.
      No secrets here: RELAY_TOKEN is an abuse gate only; scoring + analysis are server-side. -->
@@ -97,6 +99,26 @@ html[lang=ar] .introhead{font-family:"Amiri",serif;font-size:21px;font-weight:70
   box-shadow:0 2px 0 rgba(201,190,166,.7), var(--sh-s)}
 .btn.ghostbtn:active{box-shadow:0 0 0 rgba(201,190,166,.7), var(--sh-s)}
 
+/* ---------- exchange (what you get / what we get) ---------- */
+.give{display:grid;grid-template-columns:1fr;gap:0}
+.give .row{padding:12px 0}
+.give .row + .row{border-top:1px solid var(--rule)}
+.give .gk{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+html[lang=ar] .give .gk{letter-spacing:0}
+.give p{margin:0;font-size:14.5px;color:var(--ink2)}
+
+/* ---------- readiness snapshot ---------- */
+.snap{text-align:start;margin:0 0 26px}
+.snap .caps{margin-bottom:14px}
+.sdim{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:9px 0}
+.sdim + .sdim{border-top:1px solid var(--rule)}
+.sdim .sl{font-size:13.5px;font-weight:600;color:var(--ink)}
+.sdim .sm{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep)}
+html[lang=ar] .sdim .sm{letter-spacing:0}
+.sdim .sbar{grid-column:1 / -1;height:6px;background:var(--paper2);border-radius:4px;overflow:hidden;box-shadow:var(--sh-in)}
+.sdim .sbar i{display:block;height:100%;background:linear-gradient(180deg,#F1691F,var(--accent-deep));border-radius:4px}
+.snapnote{font-size:12px;color:var(--mute);margin:12px 0 0}
+
 /* ---------- quiz ---------- */
 .qtop{display:flex;align-items:center;gap:14px;padding:20px 0 10px;position:sticky;top:0;z-index:5;
   background:linear-gradient(180deg, #FFFEF9 78%, rgba(255,254,249,0))}
@@ -176,6 +198,22 @@ html[lang=ar] .insightline{font-family:"Amiri",serif;font-size:20px;line-height:
     </div>
 
     <div class="introcards">
+      <div class="card give">
+        <div class="row"><div class="gk" data-i="youGetB"></div><p data-i="youGet"></p></div>
+        <div class="row"><div class="gk" data-i="weGetB"></div><p data-i="weGet"></p></div>
+      </div>
+      <button class="btn accent" id="introbtn" style="margin-top:18px" data-i="introCta"></button>
+    </div>
+    <div class="foot"><span>AIsuperpowers</span><span data-i="footTag"></span></div>
+  </section>
+
+  <!-- BRIEF (screen two: how it works + have ready + contact) -->
+  <section class="screen" id="s-brief">
+    <div class="qtop">
+      <button class="backbtn" id="briefback" aria-label="Back"><span class="arr">&#8592;</span></button>
+      <div class="firm" style="font-size:18px">AI<b>superpowers</b></div>
+    </div>
+    <div class="introcards" style="margin-top:14px">
       <div class="card">
         <h2 class="introhead" data-i="howHead"></h2>
         <div class="step"><span class="n">1</span><p><b data-i="s1b"></b> <span data-i="s1"></span></p></div>
@@ -228,7 +266,13 @@ html[lang=ar] .insightline{font-family:"Amiri",serif;font-size:20px;line-height:
       <div class="firm">AI<b>superpowers</b></div>
       <h2 style="margin-top:30px" data-i="insightH"></h2>
       <div class="quotecard"><span class="qmark" aria-hidden="true">&#8220;</span><blockquote class="insightline" id="insighttext"></blockquote></div>
+      <div class="card snap" id="snapblock" style="display:none">
+        <div class="caps" data-i="snapHead"></div>
+        <div id="snapdims"></div>
+        <p class="snapnote" data-i="snapNote"></p>
+      </div>
       <p class="after" data-i="insightAfter"></p>
+      <p class="caps" style="margin:-14px 0 26px" data-i="teamSign"></p>
       <div id="testerbox"></div>
       <div class="foot"><span>AIsuperpowers</span><span id="reffoot"></span></div>
     </div>
@@ -249,16 +293,23 @@ try{ lang = localStorage.getItem("ais-fit-lang")==="ar" ? "ar" : "en"; }catch(e)
 function T(en, ar){ return (lang==="ar" && ar) ? ar : en; }
 
 const UI = {
-  h1:      ["Let's prepare your first session properly.", "لِنُحضِّر جلستكم الأولى كما يجب."],
-  lead:    ["Before we ever sit down, this short assessment lets us understand your situation, so the first conversation starts with thinking, not a pitch.",
-            "قبل أن نجلس معكم، يتيح لنا هذا التقييم القصير فهم وضعكم، لتبدأ المحادثة الأولى بالتفكير لا بالعرض التسويقي."],
+  h1:      ["A five-minute AI readiness check.", "فحص جاهزيتكم للذكاء الاصطناعي، في خمس دقائق."],
+  lead:    ["Answer a short set of questions about a real problem or ambition. You see where you stand today. We come back to you with something concrete, not a pitch.",
+            "تجيبون عن مجموعة قصيرة من الأسئلة حول مشكلة قائمة أو طموح فعلي لديكم، فترون أين تقفون اليوم، ثم نعود إليكم بطرح ملموس، لا بعرض تسويقي."],
+  youGetB: ["What you get", "ما تحصلون عليه"],
+  youGet:  ["An immediate observation on your situation, and a snapshot of where you stand today.",
+            "ملاحظة فورية حول وضعكم، ولمحة توضح أين تقفون اليوم."],
+  weGetB:  ["What we get", "ما نحصل عليه"],
+  weGet:   ["Enough understanding of your situation to come back to you prepared, with thinking rather than discovery questions.",
+            "فهم كافٍ لوضعكم يتيح لنا العودة إليكم باستعداد حقيقي وتفكير ناضج، لا بأسئلة استكشافية."],
+  introCta:["See how it works", "تعرّفوا على آلية العمل"],
   howHead: ["How this works", "كيف يعمل هذا"],
   s1b: ["You answer, about five minutes.", "تجيبون، خلال خمس دقائق تقريبًا."],
   s1:  ["Mostly taps, one written answer. \"Not sure yet\" is always a valid answer.", "معظمها اختيارات سريعة، وإجابة واحدة مكتوبة. و«لسنا متأكدين بعد» إجابة مقبولة دائمًا."],
-  s2b: ["We study your answers.", "ندرس إجاباتكم."],
-  s2:  ["Your situation is read and a first direction is sketched before anyone books a meeting.", "يُقرأ وضعكم ويُرسم اتجاه أولي قبل حجز أي اجتماع."],
-  s3b: ["You meet a prepared partner.", "تلتقون شريكًا مستعدًا."],
-  s3:  ["Aws Naser arrives already understanding your problem, with an immediate observation for you at the end of this form.", "يصل أوس ناصر وقد فهم مشكلتكم مسبقًا، مع ملاحظة فورية لكم في نهاية هذا النموذج."],
+  s2b: ["The AIsuperpowers team studies your answers.", "يدرس فريق AIsuperpowers إجاباتكم."],
+  s2:  ["Your situation is read and a first direction is sketched, before anything is booked or proposed.", "يُقرأ وضعكم ويُرسم اتجاه أولي، قبل حجز أي اجتماع أو تقديم أي عرض."],
+  s3b: ["You see where you stand.", "ترون أين تقفون."],
+  s3:  ["An immediate observation the moment you finish, and, where there is a real fit, a written snapshot of your readiness.", "ملاحظة فورية لحظة الانتهاء، وإذا كان ثمة توافق حقيقي، لمحة مكتوبة عن جاهزيتكم."],
   readyHead: ["Worth having ready", "يُستحسن أن يكون جاهزًا لديكم"],
   r1b: ["One recent moment", "موقف حديث واحد"],
   r1:  ["where the problem cost you something. The specific story beats the polished summary.", "كلّفكم فيه هذا الأمر شيئًا. القصة المحددة أنفع من الملخص المصقول."],
@@ -271,8 +322,8 @@ const UI = {
   lEmail:["Work email", "بريد العمل الإلكتروني"],
   phName:["Full name", "الاسم الكامل"],
   phOrg: ["Company or entity", "الشركة أو المؤسسة"],
-  privacy: ["Your answers are planning inputs used to prepare your session with us. They are not shared outside AIsuperpowers, and they are not a binding scope or quote.",
-            "إجاباتكم مدخلات تخطيطية تُستخدم لتحضير جلستكم معنا، ولا تُشارَك خارج AIsuperpowers، وليست نطاق عمل أو عرض سعر مُلزِم."],
+  privacy: ["Your answers are read by the AIsuperpowers team to understand your situation. They are not shared outside AIsuperpowers, and they are not a binding scope or quote.",
+            "إجاباتكم يقرأها فريق AIsuperpowers لفهم وضعكم، ولا تُشارَك خارج AIsuperpowers، وليست نطاق عمل أو عرض سعر مُلزِم."],
   begin: ["Begin", "لنبدأ"],
   footTag: ["Fit Assessment", "تقييم الملاءمة"],
   cont: ["Continue", "متابعة"],
@@ -281,11 +332,25 @@ const UI = {
   noteOk: ["Good. That is enough to work with.", "جيد. هذا يكفي للعمل عليه."],
   computeH: ["Reading your answers…", "نقرأ إجاباتكم…"],
   computeP: ["We are preparing an observation for you. A few seconds.", "نحضّر لكم ملاحظة. ثوانٍ قليلة."],
-  insightH: ["One observation before we meet.", "ملاحظة واحدة قبل أن نلتقي."],
-  insightAfter: ["Aws Naser will come to your first conversation already prepared: your situation read, a direction sketched. We will be in touch shortly to set the time.",
-                 "سيصل أوس ناصر إلى محادثتكم الأولى وقد قرأ وضعكم ورُسم اتجاه أولي. سنتواصل معكم قريبًا لتحديد الموعد."],
+  insightH: ["One observation from your answers.", "ملاحظة واحدة من واقع إجاباتكم."],
+  snapHead: ["Where you stand today", "أين تقفون اليوم"],
+  snapNote: ["A reading of maturity, not a grade. \"Not sure yet\" answers are part of the picture, not a mark against it.",
+             "قراءة لمستوى النضج، لا تقييم بدرجات. وإجابات «لسنا متأكدين بعد» جزء من الصورة، لا نقطة تُحسب عليكم."],
+  insightAfter: ["The AIsuperpowers team is now reading your full answers. Where there is a genuine fit, we will come back to you with a first direction: concrete, specific to your situation, not a pitch.",
+                 "يقرأ فريق AIsuperpowers الآن إجاباتكم كاملة، وحيثما يكون التوافق حقيقيًا، سنعود إليكم باتجاه أولي ملموس يخص وضعكم تحديدًا، لا بعرض تسويقي."],
+  teamSign: ["The AIsuperpowers team", "فريق AIsuperpowers"],
   newRun: ["Start a new test run", "بدء تجربة جديدة"]
 };
+
+/* Lead-facing snapshot vocabulary (levels come from the relay; deterministic, no scores or tiers shown) */
+const SNAP_DIMS = [
+  ["C", ["Problem clarity","وضوح المشكلة"]],
+  ["A", ["Decision path","مسار القرار"]],
+  ["U", ["Urgency","درجة الإلحاح"]],
+  ["F", ["Data readiness","جاهزية البيانات"]],
+  ["B", ["Investment readiness","الجاهزية الاستثمارية"]]
+];
+const SNAP_LEVELS = [["Early","مبكر"],["Emerging","ناشئ"],["Developing","في تطور"],["Advanced","متقدم"],["High","عالٍ"]];
 
 /* ================= QUESTION SET (SPEC v2 §6, bilingual) ================= */
 const COUNTRIES = {
@@ -467,7 +532,7 @@ function sequence(a){
 
 /* ================= STATE ================= */
 const $=id=>document.getElementById(id);
-const screens={welcome:$("s-welcome"),quiz:$("s-quiz"),compute:$("s-compute"),insight:$("s-insight")};
+const screens={welcome:$("s-welcome"),brief:$("s-brief"),quiz:$("s-quiz"),compute:$("s-compute"),insight:$("s-insight")};
 let state={contact:{name:"",org:"",email:""}, answers:{}, i:0, ref:null, done:false};
 try{const s=JSON.parse(localStorage.getItem("ais-fit")||"null"); if(s&&s.answers) state=s;}catch(e){}
 function save(){try{localStorage.setItem("ais-fit",JSON.stringify(state))}catch(e){}}
@@ -651,17 +716,32 @@ function submit(){
   state.ref=state.ref||makeRef(); save();
   const payload={token:RELAY_TOKEN, ref:state.ref, lang:lang, contact:state.contact, answers:state.answers,
                  route:routeOf(state.answers), ua:navigator.userAgent, ts:new Date().toISOString()};
-  const finish=(insight)=>{ state.done=true; state.lastInsight=insight; save(); showInsight(insight); };
+  const finish=(insight,snap)=>{ state.done=true; state.lastInsight=insight; if(snap) state.lastSnap=snap; save(); showInsight(insight); };
   if(!RELAY_URL){ setTimeout(()=>finish(deterministicInsight(state.answers)), 1200); return; }
   const ctl=new AbortController(); const timer=setTimeout(()=>ctl.abort(),75000);
   fetch(RELAY_URL,{method:"POST",body:JSON.stringify(payload),signal:ctl.signal})
     .then(r=>r.json())
-    .then(j=>{ clearTimeout(timer); finish((j&&j.ok&&j.insight)?j.insight:deterministicInsight(state.answers)); })
+    .then(j=>{ clearTimeout(timer); finish((j&&j.ok&&j.insight)?j.insight:deterministicInsight(state.answers), j&&j.ok?j.snapshot:null); })
     .catch(()=>{ clearTimeout(timer); finish(deterministicInsight(state.answers)); });
+}
+function renderSnapshot(){
+  const snap=state.lastSnap, block=$("snapblock");
+  if(!snap){ block.style.display="none"; return; }
+  const box=$("snapdims"); box.innerHTML="";
+  SNAP_DIMS.forEach(([k,label])=>{
+    const lv=Math.max(0,Math.min(4, Number(snap[k])||0));
+    const d=document.createElement("div"); d.className="sdim";
+    d.innerHTML='<div class="sl">'+T(label[0],label[1])+'</div>'+
+      '<div class="sm">'+T(SNAP_LEVELS[lv][0],SNAP_LEVELS[lv][1])+'</div>'+
+      '<div class="sbar"><i style="width:'+Math.max(8, lv/4*100)+'%"></i></div>';
+    box.appendChild(d);
+  });
+  block.style.display="block";
 }
 function showInsight(text){
   $("insighttext").textContent=text;
   $("reffoot").textContent=state.ref||"";
+  renderSnapshot();
   if(new URLSearchParams(location.search).has("tester")){
     const tb=$("testerbox"); tb.innerHTML="";
     const b=document.createElement("button");
@@ -673,6 +753,8 @@ function showInsight(text){
 }
 
 /* ================= WIRING ================= */
+$("introbtn").onclick=()=>{ show("brief"); };
+$("briefback").onclick=()=>{ show("welcome"); };
 $("startbtn").onclick=()=>{
   const name=$("f-name").value.trim(), org=$("f-org").value.trim(), email=$("f-email").value.trim();
   if(!name||!org||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
@@ -684,7 +766,7 @@ $("startbtn").onclick=()=>{
   state.contact={name,org,email}; state.i=0; save(); show("quiz"); render();
 };
 $("backbtn").onclick=()=>{
-  if(state.i===0){ show("welcome"); return; }
+  if(state.i===0){ show("brief"); return; }
   state.i--; save(); render();
 };
 /* boot */
